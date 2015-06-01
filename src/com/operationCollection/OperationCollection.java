@@ -1,14 +1,10 @@
 package com.operationCollection;
 
-import com.classes.Client;
-import com.classes.Cost;
-import com.classes.Tariff;
-import com.classes.TariffType;
+import com.classes.*;
 import com.factorys.ClientFactorySingleTone;
 import com.factorys.TariffFactorySingleTone;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 
@@ -36,7 +32,7 @@ public class OperationCollection {
         return null;
     }
 
-    public Client getClientID(Integer id) {
+    public Client getClientByID(Integer id) {
         for (Client client : clients) {
             if (client.getId().equals(id)) return client;
         }
@@ -52,14 +48,17 @@ public class OperationCollection {
     }
 
     public void addTestValues() {
+        /*id, title, type, cost, dateStart, textDescription*/
         tariffs.add(tariffFactory.addTariff("Title first", TariffType.CONTRACT,
-                new Cost(1000d, 100d, 5d, 0.6d, 0.28d, 0.15d, 1000d, 100d, 5d, 20d, 0.2d),
+                /*licenceFeeYear, licenceFeeMonth, licenceFeeDay, costOfCall, connectionCost, costOfMinute,
+                internetFeeYear, internetFeeMonth, internetFeeDay, internetCost1Gb, internetCost1Mb*/
+                new Cost(1000d, 100d, 5d, 0.6d, 0d, 0d, 1000d, 100d, 5d, 20d, 0.2d),
                 new GregorianCalendar(), "description first"));
         tariffs.add(tariffFactory.addTariff("Title second", TariffType.CORPORATION,
-                new Cost(900d, 100d, 5d, 0.5d, 0.2d, 0.1d, 1500d, 150d, 9d, 20d, 0.2d),
+                new Cost(1200d, 150d, 7.5d, 0d, 0d, 0d, 1500d, 150d, 9d, 20d, 0.2d),
                 new GregorianCalendar(), "description second"));
         tariffs.add(tariffFactory.addTariff("Title third", TariffType.PAY_TO_CALL,
-                new Cost(1200d, 120d, 6d, 0.4d, 0.4d, 0.15d, 800d, 75d, 3d, 20d, 0.2d),
+                new Cost(0d, 0d, 0d, 0.4d, 0d, 0.15d, 800d, 75d, 3d, 20d, 0.2d),
                 new GregorianCalendar(), "description third"));
         clients.add(clientFactory.addClient("Name first", 380960000000l, tariffs.get(0)));
         clients.add(clientFactory.addClient("Name second", 380960000001l, tariffs.get(0)));
@@ -71,8 +70,36 @@ public class OperationCollection {
         clients.add(clientFactory.addClient("Name eighth", 380960000007l, tariffs.get(0)));
     }
 
-    public void sortTariffByCost(){
+    public void sortTariffByCost() {
         Collections.sort(tariffs);
         System.out.println();
     }
+
+    public ArrayList<Tariff> searchTariffByParam(ValueInBound licenceFeeYear, ValueInBound licenceFeeMonth,
+                                                 ValueInBound licenceFeeDay, ValueInBound costOfCall,
+                                                 ValueInBound connectionCost, ValueInBound costOfMinute,
+                                                 ValueInBound internetFeeYear, ValueInBound internetFeeMonth,
+                                                 ValueInBound internetFeeDay, ValueInBound internetCost1Gb,
+                                                 ValueInBound internetCost1Mb, TariffType tariffType) {
+        ArrayList<Tariff> returnArrayList = new ArrayList<Tariff>();
+        Boolean flag;
+        for (Tariff tariffBuff : tariffs) {
+            flag = true;
+            flag = flag && licenceFeeYear.valueInBound(tariffBuff.getCost().getLicenceFeeYear());
+            flag = flag && licenceFeeMonth.valueInBound(tariffBuff.getCost().getLicenceFeeMonth());
+            flag = flag && licenceFeeDay.valueInBound(tariffBuff.getCost().getLicenceFeeDay());
+            flag = flag && costOfCall.valueInBound(tariffBuff.getCost().getCostOfCall());
+            flag = flag && connectionCost.valueInBound(tariffBuff.getCost().getConnectionCost());
+            flag = flag && costOfMinute.valueInBound(tariffBuff.getCost().getCostOfMinute());
+            flag = flag && internetFeeYear.valueInBound(tariffBuff.getCost().getInternetFeeYear());
+            flag = flag && internetFeeMonth.valueInBound(tariffBuff.getCost().getInternetFeeMonth());
+            flag = flag && internetFeeDay.valueInBound(tariffBuff.getCost().getInternetFeeDay());
+            flag = flag && internetCost1Gb.valueInBound(tariffBuff.getCost().getInternetCost1Gb());
+            flag = flag && internetCost1Mb.valueInBound(tariffBuff.getCost().getInternetCost1Mb());
+            flag = flag && tariffType.equals(tariffBuff.getType());
+            if (flag) returnArrayList.add(tariffBuff);
+        }
+        return returnArrayList;
+    }
+
 }

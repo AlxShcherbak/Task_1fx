@@ -1,9 +1,6 @@
 package com.controllers;
 
-import com.classes.Client;
-import com.classes.Cost;
-import com.classes.Tariff;
-import com.classes.TariffType;
+import com.classes.*;
 import com.operationCollection.OperationCollection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +33,8 @@ public class Controller implements Initializable {
     public MenuItem menuItem_addTestValues;
     public MenuItem menuItem_addNewClient;
     public MenuItem menuItem_actionDBSortTariffByCost;
+    public MenuItem menuItem_clientStatisticByTariff;
+    public MenuItem menuItem_actionSearchTariff;
 
     public TabPane tabPane;
 
@@ -87,6 +86,33 @@ public class Controller implements Initializable {
     public TableColumn tableColumnWatchTariffCost1Gb;
     public TableColumn tableColumnWatchTariffDescription;
 
+    public ScrollPane pane_searchTariff;
+    public AnchorPane anchorSearchTariffByParam;
+    public TextField textFieldLicFeeYearDown;
+    public TextField textFieldLicFeeYearUp;
+    public TextField textFieldLicFeeMonthDown;
+    public TextField textFieldLicFeeMonthUP;
+    public TextField textFieldLicFeeDayDown;
+    public TextField textFieldLicFeeDayUp;
+    public TextField textFieldInternetFeeYearDown;
+    public TextField textFieldInternetFeeYearUp;
+    public TextField textFieldInternetFeeMonthDown;
+    public TextField textFieldInternetFeeMonthUp;
+    public TextField textFieldInternetFeeDayDown;
+    public TextField textFieldInternetFeeDayUp;
+    public TextField textFieldCostConnDown;
+    public TextField textFieldCostConnUp;
+    public TextField textFieldCostMinuteDown;
+    public TextField textFieldCostMinuteUp;
+    public TextField textFieldCostCallDown;
+    public TextField textFieldCostCallUp;
+    public TextField textFieldCost1MbDown;
+    public TextField textFieldCost1MbUp;
+    public TextField textFieldCost1GbDown;
+    public TextField textFieldCost1GbUp;
+    public ChoiceBox choiceBoxTariffType;
+    public Button buttonSearch;
+
 
     private void clearAllFields() {
         choiceBoxAddNewTariffType.getItems().clear();
@@ -111,9 +137,28 @@ public class Controller implements Initializable {
         textFieldAddNewClientBalance.clear();
         comboBoxAddNewClientTariff.getItems().clear();
 
-        for (Tariff tariff : operationCollection.tariffsArray()) {
-            comboBoxAddNewClientTariff.getItems().add(tariff.toString());
-        }
+        textFieldLicFeeYearDown.clear();
+        textFieldLicFeeYearUp.clear();
+        textFieldLicFeeMonthDown.clear();
+        textFieldLicFeeMonthUP.clear();
+        textFieldLicFeeDayDown.clear();
+        textFieldLicFeeDayUp.clear();
+        textFieldInternetFeeYearDown.clear();
+        textFieldInternetFeeYearUp.clear();
+        textFieldInternetFeeMonthDown.clear();
+        textFieldInternetFeeMonthUp.clear();
+        textFieldInternetFeeDayDown.clear();
+        textFieldInternetFeeDayUp.clear();
+        textFieldCostConnDown.clear();
+        textFieldCostConnUp.clear();
+        textFieldCostMinuteDown.clear();
+        textFieldCostMinuteUp.clear();
+        textFieldCostCallDown.clear();
+        textFieldCostCallUp.clear();
+        textFieldCost1MbDown.clear();
+        textFieldCost1MbUp.clear();
+        textFieldCost1GbDown.clear();
+        textFieldCost1GbUp.clear();
     }
 
     private void allAnchorsVisibleFalse() {
@@ -121,6 +166,8 @@ public class Controller implements Initializable {
         anchorAddTariffFirst.setVisible(false);
         anchorAddTariffSecond.setVisible(false);
         anchorAddClient.setVisible(false);
+        pane_searchTariff.setVisible(false);
+        anchorSearchTariffByParam.setVisible(false);
         tabPane.setVisible(false);
     }
 
@@ -188,9 +235,11 @@ public class Controller implements Initializable {
         String title = "", description = "";
         title = textFieldAddNewTariffTitle.getText();
         description = textAreaAddNewTariffDescription.getText();
-
-        TariffType tariffType = TariffType.valueOf(choiceBoxAddNewTariffType.getSelectionModel().getSelectedItem().toString());
+        TariffType tariffType = null;
+        if (choiceBoxAddNewTariffType.getSelectionModel().getSelectedItem() != null)
+            tariffType = TariffType.valueOf(choiceBoxAddNewTariffType.getSelectionModel().getSelectedItem().toString());
         operationCollection.addTariff(title, tariffType, cost, new GregorianCalendar(), description);
+        watchTariff(null);
     }
 
     public void menuAddNewTariff(ActionEvent actionEvent) {
@@ -233,10 +282,12 @@ public class Controller implements Initializable {
             phoneNumber = Long.parseLong(textFieldAddNewClientPhone.getText().toString());
         } catch (NumberFormatException e) {
         }
-
+        String[] parts = new String[1];
         name = textFieldAddNewClientName.getText().toString();
-        tariffChoiceString = comboBoxAddNewClientTariff.getSelectionModel().getSelectedItem().toString();
-        String[] parts = tariffChoiceString.split("/");
+        if (comboBoxAddNewClientTariff.getSelectionModel().getSelectedItem() != null) {
+            tariffChoiceString = comboBoxAddNewClientTariff.getSelectionModel().getSelectedItem().toString();
+            parts = tariffChoiceString.split("/");
+        }
         Integer tariffChoiceID = -1;
 
         try {
@@ -254,6 +305,8 @@ public class Controller implements Initializable {
     }
 
     public void watchTariff(Event event) {
+        allAnchorsVisibleFalse();
+        tabPane.setVisible(true);
         ArrayList<Tariff> tariffs = operationCollection.tariffsArray();
         if (tariffs != null && !tariffs.isEmpty()) {
             ArrayList<StringProprty.TariffStringProperty> propertyArrayList = new ArrayList<StringProprty.TariffStringProperty>();
@@ -313,4 +366,49 @@ public class Controller implements Initializable {
         allAnchorsVisibleFalse();
         tabPane.setVisible(true);
     }
+
+    public void clientStatisticByTariff(ActionEvent actionEvent) {
+    }
+
+    public void actionSearchTariff(ActionEvent actionEvent) {
+        allAnchorsVisibleFalse();
+        pane_searchTariff.setVisible(true);
+        anchorSearchTariffByParam.setVisible(true);
+        choiceBoxTariffType.getItems().clear();
+        choiceBoxTariffType.getItems().addAll(TariffType.CONTRACT, TariffType.CORPORATION, TariffType.PAY_TO_CALL);
+
+        for (Tariff tariff : operationCollection.tariffsArray()) {
+            comboBoxAddNewClientTariff.getItems().add(tariff.toString());
+        }
+    }
+
+    public void buttonSearch(ActionEvent actionEvent) {
+        ValueInBound licenceFeeYear = null, licenceFeeMonth = null, licenceFeeDay = null,
+                costOfCall = null, connectionCost = null, costOfMinute = null,
+                internetFeeYear = null, internetFeeMonth = null, internetFeeDay = null,
+                internetCost1Gb = null, internetCost1Mb = null;
+        Double down = 0d, up = 0d;
+        ValueInBoundGen valueInBoundGen = new ValueInBoundGen();
+
+        licenceFeeYear = valueInBoundGen.valueInBoundGen(textFieldLicFeeYearDown, textFieldLicFeeYearUp);
+        licenceFeeMonth = valueInBoundGen.valueInBoundGen(textFieldLicFeeMonthDown, textFieldLicFeeMonthUP);
+        licenceFeeDay = valueInBoundGen.valueInBoundGen(textFieldLicFeeDayDown, textFieldLicFeeDayUp);
+        internetFeeYear = valueInBoundGen.valueInBoundGen(textFieldInternetFeeYearDown, textFieldInternetFeeYearUp);
+        internetFeeMonth = valueInBoundGen.valueInBoundGen(textFieldInternetFeeMonthDown, textFieldInternetFeeMonthUp);
+        internetFeeDay = valueInBoundGen.valueInBoundGen(textFieldInternetFeeDayDown, textFieldInternetFeeDayUp);
+        costOfCall = valueInBoundGen.valueInBoundGen(textFieldCostCallDown, textFieldCostCallUp);
+        connectionCost = valueInBoundGen.valueInBoundGen(textFieldCostConnDown, textFieldCostConnUp);
+        costOfMinute = valueInBoundGen.valueInBoundGen(textFieldCostMinuteDown, textFieldCostMinuteUp);
+        internetCost1Mb = valueInBoundGen.valueInBoundGen(textFieldCost1MbDown, textFieldCost1MbUp);
+        internetCost1Gb = valueInBoundGen.valueInBoundGen(textFieldCost1GbDown, textFieldCost1GbUp);
+
+        TariffType tariffType = null;
+        if (choiceBoxTariffType.getSelectionModel().getSelectedItem() != null)
+            tariffType = TariffType.valueOf(choiceBoxTariffType.getSelectionModel().getSelectedItem().toString());
+
+        ArrayList<Tariff> tar = operationCollection.searchTariffByParam(licenceFeeYear, licenceFeeMonth, licenceFeeDay,
+                costOfCall, connectionCost, costOfMinute, internetFeeYear, internetFeeMonth, internetFeeDay,
+                internetCost1Gb, internetCost1Mb, tariffType);
+    }
+
 }

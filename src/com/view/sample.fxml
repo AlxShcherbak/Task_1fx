@@ -5,20 +5,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.Controller">
+<AnchorPane fx:id="anchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.Controller">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="menuItem_watchingTabs" mnemonicParsing="false" onAction="#watchingTabs" text="WATCH BASE" />
+              <MenuItem fx:id="menuItem_close" mnemonicParsing="false" onAction="#close" text="CLOSE" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="menuItem_addTestValues" mnemonicParsing="false" onAction="#menuAddTestValues" text="Add tests values" />
                   <MenuItem fx:id="menuItem_addNewTariff" mnemonicParsing="false" onAction="#menuAddNewTariff" text="ADD NEW TARIFF" />
                   <MenuItem fx:id="menuItem_addNewClient" mnemonicParsing="false" onAction="#menuAddNewClient" text="ADD NEW CLIENT" />
+              <MenuItem fx:id="menuItem_addTestValues" mnemonicParsing="false" onAction="#menuAddTestValues" text="ADD TESTS VALUES" />
+                  <Menu fx:id="menuItem_actionDB" mnemonicParsing="false" text="ACTION WITH DB">
+                    <items>
+                      <MenuItem fx:id="menuItem_actionDBSortTariffByCost" mnemonicParsing="false" onAction="#actionDBSortTariffByCost" text="SORT TARIFFS BY COST" />
+                    </items>
+                  </Menu>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -28,7 +34,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorAddTariffFirst" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <AnchorPane fx:id="anchorAddTariffFirst" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
             <Label layoutX="18.0" layoutY="61.0" text="Title" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="75.0">
                <font>
@@ -166,21 +172,60 @@
             <Button fx:id="buttonAddNewClientApply" mnemonicParsing="false" onAction="#addNewClientApply" prefHeight="25.0" prefWidth="75.0" text="APPLY" AnchorPane.bottomAnchor="115.0" AnchorPane.rightAnchor="100.0" />
          </children>
       </AnchorPane>
-      <TabPane fx:id="tabPane" layoutY="21.0" prefHeight="379.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <TabPane fx:id="tabPane" layoutY="21.0" prefHeight="379.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <tabs>
-          <Tab text="ADD CLIENT">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-            <Tab text="WATCH TARIFF">
+            <Tab onSelectionChanged="#watchTariff" text="WATCH TARIFF">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableViewTariff" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <columns>
+                              <TableColumn fx:id="tableColumnWatchTariffID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="40.0" text="ID" />
+                              <TableColumn fx:id="tableColumnWatchTariffTitle" prefWidth="75.0" text="Title" />
+                              <TableColumn fx:id="tableColumnWatchTariffType" prefWidth="75.0" text="Type" />
+                              <TableColumn fx:id="tableColumnWatchTariffLicFee" prefWidth="180.0" text="Licence fee">
+                                 <columns>
+                                    <TableColumn fx:id="tableColumnWatchTariffLicFeeYear" prefWidth="40.0" text="Year" />
+                                    <TableColumn fx:id="tableColumnWatchTariffLicFeeMonth" prefWidth="50.0" text="Month" />
+                                    <TableColumn fx:id="tableColumnWatchTariffLicFeeDay" prefWidth="40.0" text="Day" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn fx:id="tableColumnWatchTariffInternetFee" prefWidth="180.0" text="Internet fee">
+                                 <columns>
+                                    <TableColumn fx:id="tableColumnWatchTariffInternetFeeYear" prefWidth="40.0" text="Year" />
+                                    <TableColumn fx:id="tableColumnWatchTariffInternetFeeMonth" prefWidth="50.0" text="Month" />
+                                    <TableColumn fx:id="tableColumnWatchTariffInternetFeeDay" prefWidth="40.0" text="Day" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn fx:id="tableColumnWatchTariffCost" prefWidth="75.0" text="Cost">
+                                 <columns>
+                                    <TableColumn fx:id="tableColumnWatchTariffCostConnect" prefWidth="75.0" text="Connection" />
+                                    <TableColumn fx:id="tableColumnWatchTariffCostCall" prefWidth="40.0" text="Call" />
+                                    <TableColumn fx:id="tableColumnWatchTariffCostMinute" prefWidth="50.0" text="Minute" />
+                                    <TableColumn fx:id="tableColumnWatchTariffCost1Mb" prefWidth="40.0" text="1Mb" />
+                                    <TableColumn fx:id="tableColumnWatchTariffCost1Gb" prefWidth="40.0" text="1Gb" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn fx:id="tableColumnWatchTariffDescription" prefWidth="134.0" text="Description" />
+                           </columns>
+                        </TableView>
+                     </children></AnchorPane>
               </content>
             </Tab>
-            <Tab text="WATCH CLIENT">
+            <Tab onSelectionChanged="#watchClient" text="WATCH CLIENT">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableViewClient" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <columns>
+                              <TableColumn fx:id="tableColumnWatchClientID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="40.0" text="ID" />
+                              <TableColumn fx:id="tableColumnWatchClientName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" text="NAME" />
+                              <TableColumn fx:id="tableColumnWatchClientPhoneNum" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="150.0" text="PHONE NUMBER" />
+                              <TableColumn fx:id="tableColumnWatchClientTariff" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="120.0" text="TARIFF" />
+                              <TableColumn fx:id="tableColumnWatchClientBalance" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="BALANCE" />
+                           </columns>
+                        </TableView>
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="STATISTIC">

@@ -8,6 +8,8 @@ import com.factorys.ClientFactorySingleTone;
 import com.factorys.TariffFactorySingleTone;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 
 /**
@@ -41,8 +43,12 @@ public class OperationCollection {
         return null;
     }
 
-    public ArrayList<Tariff> tariffsArray(){
+    public ArrayList<Tariff> tariffsArray() {
         return tariffs;
+    }
+
+    public ArrayList<Client> clientArray() {
+        return clients;
     }
 
     public void addTestValues() {
@@ -63,5 +69,10 @@ public class OperationCollection {
         clients.add(clientFactory.addClient("Name sixth", 380960000005l, tariffs.get(2)));
         clients.add(clientFactory.addClient("Name seventh", 380960000006l, tariffs.get(2)));
         clients.add(clientFactory.addClient("Name eighth", 380960000007l, tariffs.get(0)));
+    }
+
+    public void sortTariffByCost(){
+        Collections.sort(tariffs);
+        System.out.println();
     }
 }

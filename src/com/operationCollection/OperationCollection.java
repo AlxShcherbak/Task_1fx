@@ -82,7 +82,7 @@ public class OperationCollection {
                                                  ValueInBound internetFeeDay, ValueInBound internetCost1Gb,
                                                  ValueInBound internetCost1Mb, TariffType tariffType) {
         ArrayList<Tariff> returnArrayList = new ArrayList<Tariff>();
-        Boolean flag;
+        Boolean flag, tariffTypeflag;
         for (Tariff tariffBuff : tariffs) {
             flag = true;
             flag = flag && licenceFeeYear.valueInBound(tariffBuff.getCost().getLicenceFeeYear());
@@ -96,7 +96,9 @@ public class OperationCollection {
             flag = flag && internetFeeDay.valueInBound(tariffBuff.getCost().getInternetFeeDay());
             flag = flag && internetCost1Gb.valueInBound(tariffBuff.getCost().getInternetCost1Gb());
             flag = flag && internetCost1Mb.valueInBound(tariffBuff.getCost().getInternetCost1Mb());
-            flag = flag && tariffType.equals(tariffBuff.getType());
+            if (tariffType == null) tariffTypeflag = true;
+            else tariffTypeflag = tariffType == tariffBuff.getType();
+            flag = flag && tariffTypeflag;
             if (flag) returnArrayList.add(tariffBuff);
         }
         return returnArrayList;

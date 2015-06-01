@@ -113,6 +113,28 @@ public class Controller implements Initializable {
     public ChoiceBox choiceBoxTariffType;
     public Button buttonSearch;
 
+    public AnchorPane watchTariffSearch;
+    public TableView tableViewTariffSearch;
+    public TableColumn tableColumnSearchID;
+    public TableColumn tableColumnSearchTitle;
+    public TableColumn tableColumnSearchType;
+    public TableColumn tableColumnSearchLicFee;
+    public TableColumn tableColumnSearchLicFeeYear;
+    public TableColumn tableColumnSearchLicFeeMonth;
+    public TableColumn tableColumnSearchLicFeeDay;
+    public TableColumn tableColumnSearchInternetFee;
+    public TableColumn tableColumnSearchInternetFeeYear;
+    public TableColumn tableColumnSearchInternetFeeMonth;
+    public TableColumn tableColumnSearchInternetFeeDay;
+    public TableColumn tableColumnSearchCost;
+    public TableColumn tableColumnSearchCostConnect;
+    public TableColumn tableColumnSearchCostCall;
+    public TableColumn tableColumnSearchCostMinute;
+    public TableColumn tableColumnSearchCost1Mb;
+    public TableColumn tableColumnSearchCost1Gb;
+    public TableColumn tableColumnSearchDescription;
+    public Button searchButtonBack;
+
 
     private void clearAllFields() {
         choiceBoxAddNewTariffType.getItems().clear();
@@ -169,6 +191,7 @@ public class Controller implements Initializable {
         pane_searchTariff.setVisible(false);
         anchorSearchTariffByParam.setVisible(false);
         tabPane.setVisible(false);
+        watchTariffSearch.setVisible(false);
     }
 
 
@@ -383,6 +406,8 @@ public class Controller implements Initializable {
     }
 
     public void buttonSearch(ActionEvent actionEvent) {
+        allAnchorsVisibleFalse();
+        watchTariffSearch.setVisible(true);
         ValueInBound licenceFeeYear = null, licenceFeeMonth = null, licenceFeeDay = null,
                 costOfCall = null, connectionCost = null, costOfMinute = null,
                 internetFeeYear = null, internetFeeMonth = null, internetFeeDay = null,
@@ -409,6 +434,39 @@ public class Controller implements Initializable {
         ArrayList<Tariff> tar = operationCollection.searchTariffByParam(licenceFeeYear, licenceFeeMonth, licenceFeeDay,
                 costOfCall, connectionCost, costOfMinute, internetFeeYear, internetFeeMonth, internetFeeDay,
                 internetCost1Gb, internetCost1Mb, tariffType);
+
+        if (tar != null && !tar.isEmpty()) {
+            ArrayList<StringProprty.TariffStringProperty> propertyArrayList = new ArrayList<StringProprty.TariffStringProperty>();
+
+            for (Tariff tariff : tar) {
+                propertyArrayList.add(new StringProprty.TariffStringProperty(tariff));
+            }
+
+            tableColumnSearchID.setCellValueFactory(new PropertyValueFactory<Tariff, String>("id"));
+            tableColumnSearchTitle.setCellValueFactory(new PropertyValueFactory<Tariff, String>("title"));
+            tableColumnSearchType.setCellValueFactory(new PropertyValueFactory<Tariff, String>("type"));
+            tableColumnSearchLicFeeYear.setCellValueFactory(new PropertyValueFactory<Tariff, String>("licFeeYear"));
+            tableColumnSearchLicFeeMonth.setCellValueFactory(new PropertyValueFactory<Tariff, String>("licFeeMonth"));
+            tableColumnSearchLicFeeDay.setCellValueFactory(new PropertyValueFactory<Tariff, String>("licFeeDay"));
+            tableColumnSearchInternetFeeYear.setCellValueFactory(new PropertyValueFactory<Tariff, String>("internetFeeYear"));
+            tableColumnSearchInternetFeeMonth.setCellValueFactory(new PropertyValueFactory<Tariff, String>("internetFeeMonth"));
+            tableColumnSearchInternetFeeDay.setCellValueFactory(new PropertyValueFactory<Tariff, String>("internetFeeDay"));
+            tableColumnSearchCostConnect.setCellValueFactory(new PropertyValueFactory<Tariff, String>("costOfConnection"));
+            tableColumnSearchCostCall.setCellValueFactory(new PropertyValueFactory<Tariff, String>("costOfCall"));
+            tableColumnSearchCostMinute.setCellValueFactory(new PropertyValueFactory<Tariff, String>("costOfMinute"));
+            tableColumnSearchCost1Mb.setCellValueFactory(new PropertyValueFactory<Tariff, String>("internetCost1Mb"));
+            tableColumnSearchCost1Gb.setCellValueFactory(new PropertyValueFactory<Tariff, String>("internetCost1Gb"));
+            tableColumnSearchDescription.setCellValueFactory(new PropertyValueFactory<Tariff, String>("textDescription"));
+
+            ObservableList<StringProprty.TariffStringProperty> data =
+                    FXCollections.observableArrayList(propertyArrayList);
+            tableViewTariffSearch.setItems(data);
+        }
     }
 
+    public void searchButonBack(ActionEvent actionEvent) {
+        watchTariffSearch.setVisible(false);
+        pane_searchTariff.setVisible(true);
+        anchorSearchTariffByParam.setVisible(true);
+    }
 }

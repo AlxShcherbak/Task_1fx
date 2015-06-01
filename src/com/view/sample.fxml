@@ -339,5 +339,46 @@
             </AnchorPane>
          </content>
       </ScrollPane>
+      <AnchorPane fx:id="watchTariffSearch" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <TableView fx:id="tableViewTariffSearch" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0">
+               <columns>
+                  <TableColumn fx:id="tableColumnSearchID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="40.0" text="ID" />
+                  <TableColumn fx:id="tableColumnSearchTitle" prefWidth="75.0" text="Title" />
+                  <TableColumn fx:id="tableColumnSearchType" prefWidth="75.0" text="Type" />
+                  <TableColumn fx:id="tableColumnSearchLicFee" prefWidth="180.0" text="Licence fee">
+                     <columns>
+                        <TableColumn fx:id="tableColumnSearchLicFeeYear" prefWidth="40.0" text="Year" />
+                        <TableColumn fx:id="tableColumnSearchLicFeeMonth" prefWidth="50.0" text="Month" />
+                        <TableColumn fx:id="tableColumnSearchLicFeeDay" prefWidth="40.0" text="Day" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumnSearchInternetFee" prefWidth="180.0" text="Internet fee">
+                     <columns>
+                        <TableColumn fx:id="tableColumnSearchInternetFeeYear" prefWidth="40.0" text="Year" />
+                        <TableColumn fx:id="tableColumnSearchInternetFeeMonth" prefWidth="50.0" text="Month" />
+                        <TableColumn fx:id="tableColumnSearchInternetFeeDay" prefWidth="40.0" text="Day" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumnSearchCost" prefWidth="75.0" text="Cost">
+                     <columns>
+                        <TableColumn fx:id="tableColumnSearchCostConnect" prefWidth="75.0" text="Connection" />
+                        <TableColumn fx:id="tableColumnSearchCostCall" prefWidth="40.0" text="Call" />
+                        <TableColumn fx:id="tableColumnSearchCostMinute" prefWidth="50.0" text="Minute" />
+                        <TableColumn fx:id="tableColumnSearchCost1Mb" prefWidth="40.0" text="1Mb" />
+                        <TableColumn fx:id="tableColumnSearchCost1Gb" prefWidth="40.0" text="1Gb" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumnSearchDescription" prefWidth="134.0" text="Description" />
+               </columns>
+            </TableView>
+            <Label alignment="CENTER" layoutX="459.0" layoutY="14.0" text="RESULT OF SEARCH" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Button fx:id="searchButtonBack" layoutX="604.0" layoutY="415.0" mnemonicParsing="false" onAction="#searchButonBack" prefHeight="25.0" prefWidth="100.0" text="Back" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="100.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

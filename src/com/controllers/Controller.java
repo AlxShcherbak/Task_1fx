@@ -135,6 +135,12 @@ public class Controller implements Initializable {
     public TableColumn tableColumnSearchDescription;
     public Button searchButtonBack;
 
+    public AnchorPane anchorStatistic;
+    public ComboBox statisticComboBoxTariffType;
+    public ComboBox statisticComboBoxTariff;
+    public TextField statisticNumberofClient;
+    public Button buttonstatisticApply;
+
 
     private void clearAllFields() {
         choiceBoxAddNewTariffType.getItems().clear();
@@ -181,6 +187,10 @@ public class Controller implements Initializable {
         textFieldCost1MbUp.clear();
         textFieldCost1GbDown.clear();
         textFieldCost1GbUp.clear();
+
+        statisticComboBoxTariffType.getItems().clear();
+        statisticComboBoxTariff.getItems().clear();
+        statisticNumberofClient.clear();
     }
 
     private void allAnchorsVisibleFalse() {
@@ -192,6 +202,7 @@ public class Controller implements Initializable {
         anchorSearchTariffByParam.setVisible(false);
         tabPane.setVisible(false);
         watchTariffSearch.setVisible(false);
+        anchorStatistic.setVisible(false);
     }
 
 
@@ -279,6 +290,9 @@ public class Controller implements Initializable {
         allAnchorsVisibleFalse();
         clearAllFields();
         anchorAddClient.setVisible(true);
+        for (Tariff tariff : operationCollection.tariffsArray()) {
+            comboBoxAddNewClientTariff.getItems().add(tariff.toString());
+        }
     }
 
     /**
@@ -391,6 +405,12 @@ public class Controller implements Initializable {
     }
 
     public void clientStatisticByTariff(ActionEvent actionEvent) {
+        allAnchorsVisibleFalse();
+        anchorStatistic.setVisible(true);
+        statisticComboBoxTariffType.getItems().addAll(TariffType.CONTRACT, TariffType.CORPORATION, TariffType.PAY_TO_CALL);
+        for (Tariff tariff : operationCollection.tariffsArray()) {
+            statisticComboBoxTariff.getItems().add(tariff.toString());
+        }
     }
 
     public void actionSearchTariff(ActionEvent actionEvent) {
@@ -468,5 +488,8 @@ public class Controller implements Initializable {
         watchTariffSearch.setVisible(false);
         pane_searchTariff.setVisible(true);
         anchorSearchTariffByParam.setVisible(true);
+    }
+
+    public void showStatistic(ActionEvent actionEvent) {
     }
 }

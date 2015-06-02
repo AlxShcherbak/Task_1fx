@@ -12,6 +12,11 @@ public class ValueInBound {
         this.upBound = upBound;
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     public Boolean valueInBound(Double value) {
         if (downBound == null && upBound == null) {
             return true;
@@ -54,6 +59,9 @@ public class ValueInBound {
         this.upBound = upBound;
     }
 
+    /**
+     *
+     */
     public class BoundValueException extends RuntimeException {
         /**
          * Constructs a new exception with {@code null} as its detail message.

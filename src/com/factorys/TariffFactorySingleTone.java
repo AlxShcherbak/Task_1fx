@@ -21,6 +21,15 @@ public class TariffFactorySingleTone {
         return tariffFactorySingleTone;
     }
 
+    /**
+     *
+     * @param title
+     * @param type
+     * @param cost
+     * @param dateStart
+     * @param textDescription
+     * @return
+     */
     public Tariff addTariff(String title, TariffType type, Cost cost, GregorianCalendar dateStart, String textDescription) {
         return new Tariff(id++, title, type, cost, dateStart, textDescription);
     }

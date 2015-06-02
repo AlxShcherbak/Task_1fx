@@ -17,10 +17,23 @@ public class ClientFactorySingleTone {
         return clientFactorySingleTone;
     }
 
+    /**
+     *
+     * @param name
+     * @param phoneNumber
+     * @param tariff
+     * @return
+     */
     public Client addClient(String name, Long phoneNumber, Tariff tariff) {
         return new Client(id++, name, phoneNumber, tariff);
     }
 
+    /**
+     *
+     * @param phoneNumber
+     * @param tariff
+     * @return
+     */
     public Client addClient(Long phoneNumber, Tariff tariff) {
         return new Client(id++, phoneNumber, tariff);
     }

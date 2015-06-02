@@ -26,6 +26,10 @@ public class StringProprty {
         private SimpleStringProperty internetCost1Gb;
         private SimpleStringProperty textDescription;
 
+        /**
+         *
+         * @param tariff
+         */
         public TariffStringProperty(Tariff tariff) {
             String number = tariff.getId().toString();
             if (number.length() == 1) number = "00" + number;
@@ -236,6 +240,10 @@ public class StringProprty {
         private SimpleStringProperty tariff;
         private SimpleStringProperty balance;
 
+        /**
+         *
+         * @param client
+         */
         public ClientStringProperty(Client client) {
             String number = client.getId().toString();
             if (number.length() == 1) number = "00" + number;

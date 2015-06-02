@@ -16,8 +16,24 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
+/**
+ * @author Alx Shcherbak
+ * @see javafx.fxml.Initializable
+ * @since 28.05.2015
+ */
 public class Controller implements Initializable {
+    /**
+     *
+     */
     static public OperationCollection operationCollection = new OperationCollection();
+    /**
+     *
+     */
+    static public SubController subController = new SubController();
+
+    /**
+     *
+     */
     public AnchorPane anchorMain;
 
     public AnchorPane anchorAddTariffFirst;
@@ -136,12 +152,13 @@ public class Controller implements Initializable {
     public Button searchButtonBack;
 
     public AnchorPane anchorStatistic;
-    public ComboBox statisticComboBoxTariffType;
     public ComboBox statisticComboBoxTariff;
     public TextField statisticNumberofClient;
     public Button buttonstatisticApply;
 
-
+    /**
+     *
+     */
     private void clearAllFields() {
         choiceBoxAddNewTariffType.getItems().clear();
         choiceBoxAddNewTariffType.getItems().addAll(TariffType.CONTRACT, TariffType.CORPORATION, TariffType.PAY_TO_CALL);
@@ -188,11 +205,13 @@ public class Controller implements Initializable {
         textFieldCost1GbDown.clear();
         textFieldCost1GbUp.clear();
 
-        statisticComboBoxTariffType.getItems().clear();
         statisticComboBoxTariff.getItems().clear();
         statisticNumberofClient.clear();
     }
 
+    /**
+     *
+     */
     private void allAnchorsVisibleFalse() {
         anchorMain.setVisible(true);
         anchorAddTariffFirst.setVisible(false);
@@ -206,60 +225,36 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void buttonAddNewTariffNext(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
         anchorAddTariffSecond.setVisible(true);
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void buttonAddTariffApply(ActionEvent actionEvent) {
-        Double licenceFeeYear = 0d, licenceFeeMonth = 0d, licenceFeeDay = 0d,
-                costOfCall = 0d, connectionCost = 0d, costOfMinute = 0d,
-                internetFeeYear = 0d, internetFeeMonth = 0d, internetFeeDay = 0d,
-                internetCost1Gb = 0d, internetCost1Mb = 0d;
-        try {
-            licenceFeeYear = Double.parseDouble(textFieldAddNewTariffInternetFeeYear.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            licenceFeeMonth = Double.parseDouble(textFieldAddNewTariffLicFeeMonth.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            licenceFeeDay = Double.parseDouble(textFieldAddNewTariffLicFeeDay.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            costOfCall = Double.parseDouble(textFieldAddNewTariffCostCall.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            connectionCost = Double.parseDouble(textFieldAddNewTariffCostConnect.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            costOfMinute = Double.parseDouble(textFieldAddNewTariffCostMinute.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            internetFeeYear = Double.parseDouble(textFieldAddNewTariffInternetFeeYear.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            internetFeeMonth = Double.parseDouble(textFieldAddNewTariffInternetFeeMonth.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            internetFeeDay = Double.parseDouble(textFieldAddNewTariffInternetFeeDay.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            internetCost1Gb = Double.parseDouble(textFieldAddNewTariffCost1Gb.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
-        try {
-            internetCost1Mb = Double.parseDouble(textFieldAddNewTariffCost1Mb.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
+        Double licenceFeeYear = null, licenceFeeMonth = null, licenceFeeDay = null,
+                costOfCall = null, connectionCost = null, costOfMinute = null,
+                internetFeeYear = null, internetFeeMonth = null, internetFeeDay = null,
+                internetCost1Gb = null, internetCost1Mb = null;
+
+        licenceFeeYear = subController.textFieldToDouble(textFieldAddNewTariffInternetFeeYear);
+        licenceFeeMonth = subController.textFieldToDouble(textFieldAddNewTariffLicFeeMonth);
+        licenceFeeDay = subController.textFieldToDouble(textFieldAddNewTariffLicFeeDay);
+        costOfCall = subController.textFieldToDouble(textFieldAddNewTariffCostCall);
+        connectionCost = subController.textFieldToDouble(textFieldAddNewTariffCostConnect);
+        costOfMinute = subController.textFieldToDouble(textFieldAddNewTariffCostMinute);
+        internetFeeYear = subController.textFieldToDouble(textFieldAddNewTariffInternetFeeYear);
+        internetFeeMonth = subController.textFieldToDouble(textFieldAddNewTariffInternetFeeMonth);
+        internetFeeDay = subController.textFieldToDouble(textFieldAddNewTariffInternetFeeDay);
+        internetCost1Gb = subController.textFieldToDouble(textFieldAddNewTariffCost1Gb);
+        internetCost1Mb = subController.textFieldToDouble(textFieldAddNewTariffCost1Mb);
 
         Cost cost = new Cost(licenceFeeYear, licenceFeeMonth, licenceFeeDay,
                 costOfCall, connectionCost, costOfMinute,
@@ -276,12 +271,20 @@ public class Controller implements Initializable {
         watchTariff(null);
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void menuAddNewTariff(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
         clearAllFields();
         anchorAddTariffFirst.setVisible(true);
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void menuAddTestValues(ActionEvent actionEvent) {
         operationCollection.addTestValues();
     }
@@ -310,6 +313,10 @@ public class Controller implements Initializable {
         watchTariff(new Event(null));
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void addNewClientApply(ActionEvent actionEvent) {
         Long phoneNumber = 0l;
         String name = "", tariffChoiceString;
@@ -337,10 +344,18 @@ public class Controller implements Initializable {
         operationCollection.addClient(name, phoneNumber, tariff);
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void close(ActionEvent actionEvent) {
         System.exit(100);
     }
 
+    /**
+     *
+     * @param event
+     */
     public void watchTariff(Event event) {
         allAnchorsVisibleFalse();
         tabPane.setVisible(true);
@@ -374,6 +389,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     public void watchClient(Event event) {
         ArrayList<Client> clients = operationCollection.clientArray();
         if (clients != null && !clients.isEmpty()) {
@@ -395,24 +414,39 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void actionDBSortTariffByCost(ActionEvent actionEvent) {
         operationCollection.sortTariffByCost();
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void watchingTabs(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
         tabPane.setVisible(true);
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void clientStatisticByTariff(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
         anchorStatistic.setVisible(true);
-        statisticComboBoxTariffType.getItems().addAll(TariffType.CONTRACT, TariffType.CORPORATION, TariffType.PAY_TO_CALL);
         for (Tariff tariff : operationCollection.tariffsArray()) {
             statisticComboBoxTariff.getItems().add(tariff.toString());
         }
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void actionSearchTariff(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
         pane_searchTariff.setVisible(true);
@@ -425,6 +459,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void buttonSearch(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
         watchTariffSearch.setVisible(true);
@@ -433,19 +471,18 @@ public class Controller implements Initializable {
                 internetFeeYear = null, internetFeeMonth = null, internetFeeDay = null,
                 internetCost1Gb = null, internetCost1Mb = null;
         Double down = 0d, up = 0d;
-        ValueInBoundGen valueInBoundGen = new ValueInBoundGen();
 
-        licenceFeeYear = valueInBoundGen.valueInBoundGen(textFieldLicFeeYearDown, textFieldLicFeeYearUp);
-        licenceFeeMonth = valueInBoundGen.valueInBoundGen(textFieldLicFeeMonthDown, textFieldLicFeeMonthUP);
-        licenceFeeDay = valueInBoundGen.valueInBoundGen(textFieldLicFeeDayDown, textFieldLicFeeDayUp);
-        internetFeeYear = valueInBoundGen.valueInBoundGen(textFieldInternetFeeYearDown, textFieldInternetFeeYearUp);
-        internetFeeMonth = valueInBoundGen.valueInBoundGen(textFieldInternetFeeMonthDown, textFieldInternetFeeMonthUp);
-        internetFeeDay = valueInBoundGen.valueInBoundGen(textFieldInternetFeeDayDown, textFieldInternetFeeDayUp);
-        costOfCall = valueInBoundGen.valueInBoundGen(textFieldCostCallDown, textFieldCostCallUp);
-        connectionCost = valueInBoundGen.valueInBoundGen(textFieldCostConnDown, textFieldCostConnUp);
-        costOfMinute = valueInBoundGen.valueInBoundGen(textFieldCostMinuteDown, textFieldCostMinuteUp);
-        internetCost1Mb = valueInBoundGen.valueInBoundGen(textFieldCost1MbDown, textFieldCost1MbUp);
-        internetCost1Gb = valueInBoundGen.valueInBoundGen(textFieldCost1GbDown, textFieldCost1GbUp);
+        licenceFeeYear = subController.valueInBoundGen(textFieldLicFeeYearDown, textFieldLicFeeYearUp);
+        licenceFeeMonth = subController.valueInBoundGen(textFieldLicFeeMonthDown, textFieldLicFeeMonthUP);
+        licenceFeeDay = subController.valueInBoundGen(textFieldLicFeeDayDown, textFieldLicFeeDayUp);
+        internetFeeYear = subController.valueInBoundGen(textFieldInternetFeeYearDown, textFieldInternetFeeYearUp);
+        internetFeeMonth = subController.valueInBoundGen(textFieldInternetFeeMonthDown, textFieldInternetFeeMonthUp);
+        internetFeeDay = subController.valueInBoundGen(textFieldInternetFeeDayDown, textFieldInternetFeeDayUp);
+        costOfCall = subController.valueInBoundGen(textFieldCostCallDown, textFieldCostCallUp);
+        connectionCost = subController.valueInBoundGen(textFieldCostConnDown, textFieldCostConnUp);
+        costOfMinute = subController.valueInBoundGen(textFieldCostMinuteDown, textFieldCostMinuteUp);
+        internetCost1Mb = subController.valueInBoundGen(textFieldCost1MbDown, textFieldCost1MbUp);
+        internetCost1Gb = subController.valueInBoundGen(textFieldCost1GbDown, textFieldCost1GbUp);
 
         TariffType tariffType = null;
         if (choiceBoxTariffType.getSelectionModel().getSelectedItem() != null)
@@ -484,12 +521,32 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void searchButonBack(ActionEvent actionEvent) {
         watchTariffSearch.setVisible(false);
         pane_searchTariff.setVisible(true);
         anchorSearchTariffByParam.setVisible(true);
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void showStatistic(ActionEvent actionEvent) {
+        statisticNumberofClient.setText("");
+        String[] parts = new String[1];
+        if (statisticComboBoxTariff.getSelectionModel().getSelectedItem() != null) {
+            parts = statisticComboBoxTariff.getSelectionModel().getSelectedItem().toString().split("/");
+        }
+        Integer tariffChoiceID = -1;
+
+        try {
+            tariffChoiceID = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException e) {
+        }
+        statisticNumberofClient.setText(String.valueOf(operationCollection.statisticByTariff(operationCollection.getTariffById(tariffChoiceID))));
     }
 }

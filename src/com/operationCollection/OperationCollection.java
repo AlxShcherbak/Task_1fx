@@ -12,26 +12,59 @@ import java.util.GregorianCalendar;
  * Created by Alx Shcherbak on 27.05.2015.
  */
 public class OperationCollection {
+    /**
+     *
+     */
     static ClientFactorySingleTone clientFactory = ClientFactorySingleTone.getFactoryCard();
+    /**
+     *
+     */
     static TariffFactorySingleTone tariffFactory = TariffFactorySingleTone.getFactoryCard();
+    /**
+     *
+     */
     static ArrayList<Tariff> tariffs = new ArrayList<Tariff>();
+    /**
+     *
+     */
     static ArrayList<Client> clients = new ArrayList<Client>();
 
+    /**
+     * @param title
+     * @param type
+     * @param cost
+     * @param dateStart
+     * @param textDescription
+     */
     public void addTariff(String title, TariffType type, Cost cost, GregorianCalendar dateStart, String textDescription) {
         tariffs.add(tariffFactory.addTariff(title, type, cost, dateStart, textDescription));
     }
 
+    /**
+     * @param name
+     * @param phoneNumber
+     * @param tariff
+     */
     public void addClient(String name, Long phoneNumber, Tariff tariff) {
         clients.add(clientFactory.addClient(name, phoneNumber, tariff));
     }
 
+    /**
+     * @param id
+     * @return
+     */
     public Tariff getTariffById(Integer id) {
+        if (id == null) return null;
         for (Tariff tariff : tariffs) {
             if (tariff.getId().equals(id)) return tariff;
         }
         return null;
     }
 
+    /**
+     * @param id
+     * @return
+     */
     public Client getClientByID(Integer id) {
         for (Client client : clients) {
             if (client.getId().equals(id)) return client;
@@ -39,14 +72,23 @@ public class OperationCollection {
         return null;
     }
 
+    /**
+     * @return
+     */
     public ArrayList<Tariff> tariffsArray() {
         return tariffs;
     }
 
+    /**
+     * @return
+     */
     public ArrayList<Client> clientArray() {
         return clients;
     }
 
+    /**
+     *
+     */
     public void addTestValues() {
         /*id, title, type, cost, dateStart, textDescription*/
         tariffs.add(tariffFactory.addTariff("Title first", TariffType.CONTRACT,
@@ -70,11 +112,29 @@ public class OperationCollection {
         clients.add(clientFactory.addClient("Name eighth", 380960000007l, tariffs.get(0)));
     }
 
+    /**
+     *
+     */
     public void sortTariffByCost() {
         Collections.sort(tariffs);
         System.out.println();
     }
 
+    /**
+     * @param licenceFeeYear
+     * @param licenceFeeMonth
+     * @param licenceFeeDay
+     * @param costOfCall
+     * @param connectionCost
+     * @param costOfMinute
+     * @param internetFeeYear
+     * @param internetFeeMonth
+     * @param internetFeeDay
+     * @param internetCost1Gb
+     * @param internetCost1Mb
+     * @param tariffType
+     * @return
+     */
     public ArrayList<Tariff> searchTariffByParam(ValueInBound licenceFeeYear, ValueInBound licenceFeeMonth,
                                                  ValueInBound licenceFeeDay, ValueInBound costOfCall,
                                                  ValueInBound connectionCost, ValueInBound costOfMinute,
@@ -104,4 +164,17 @@ public class OperationCollection {
         return returnArrayList;
     }
 
+    /**
+     * @param tariff
+     * @return
+     */
+    public Integer statisticByTariff(Tariff tariff) {
+        Integer clientCounter = 0;
+        if (tariff != null) {
+            for (Client clientBuff : clients) {
+                if (clientBuff.getTariff() == (tariff)) clientCounter++;
+            }
+        } else clientCounter = clients.size();
+        return clientCounter;
+    }
 }

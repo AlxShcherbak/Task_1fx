@@ -19,6 +19,14 @@ public class SubController {
             return Double.parseDouble(textField.getText().toString());
         } catch (java.lang.NumberFormatException e) {
         }
+        return 0d;
+    }
+
+    public Double textFieldToDoubleWithNull(TextField textField) {
+        try {
+            return Double.parseDouble(textField.getText().toString());
+        } catch (java.lang.NumberFormatException e) {
+        }
         return null;
     }
 
@@ -30,8 +38,8 @@ public class SubController {
      */
     public ValueInBound valueInBoundGen(TextField downTF, TextField upTF) {
         Double up = null, down = null;
-        down = textFieldToDouble(downTF);
-        up = textFieldToDouble(upTF);
+        down = textFieldToDoubleWithNull(downTF);
+        up = textFieldToDoubleWithNull(upTF);
         return new ValueInBound(down, up);
     }
 }

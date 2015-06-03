@@ -23,28 +23,27 @@ import java.util.ResourceBundle;
  */
 public class Controller implements Initializable {
     /**
-     *
+     * created example of OperationCollection
      */
     static public OperationCollection operationCollection = new OperationCollection();
     /**
-     *
+     * created example of SubController
      */
     static public SubController subController = new SubController();
 
     /**
-     *
+     * main anchor in program
      */
     public AnchorPane anchorMain;
 
     public AnchorPane anchorAddTariffFirst;
     public TextField textFieldAddNewTariffTitle;
-    public ChoiceBox choiceBoxAddNewTariffType;
+    public ChoiceBox<TariffType> choiceBoxAddNewTariffType;
 
     public TextArea textAreaAddNewTariffDescription;
     public Button buttonAddNewTariffNext;
 
     public MenuItem menuItem_close;
-    public MenuItem menuItem_watchingTabs;
     public MenuItem menuItem_addNewTariff;
     public MenuItem menuItem_addTestValues;
     public MenuItem menuItem_addNewClient;
@@ -72,35 +71,34 @@ public class Controller implements Initializable {
     public TextField textFieldAddNewClientName;
     public TextField textFieldAddNewClientPhone;
     public TextField textFieldAddNewClientBalance;
-    public ComboBox comboBoxAddNewClientTariff;
+    public ComboBox<String> comboBoxAddNewClientTariff;
     public Button buttonAddNewClientApply;
 
-    public TableView tableView;
-    public TableColumn tableColumnWatchClientID;
-    public TableColumn tableColumnWatchClientName;
-    public TableColumn tableColumnWatchClientPhoneNum;
-    public TableColumn tableColumnWatchClientTariff;
-    public TableColumn tableColumnWatchClientBalance;
-    public TableView tableViewClient;
-    public TableView tableViewTariff;
-    public TableColumn tableColumnWatchTariffID;
-    public TableColumn tableColumnWatchTariffTitle;
-    public TableColumn tableColumnWatchTariffType;
+    public TableColumn<Client, String> tableColumnWatchClientID;
+    public TableColumn<Client, String> tableColumnWatchClientName;
+    public TableColumn<Client, String> tableColumnWatchClientPhoneNum;
+    public TableColumn<Client, String> tableColumnWatchClientTariff;
+    public TableColumn<Client, String> tableColumnWatchClientBalance;
+    public TableView<StringProprty.ClientStringProperty> tableViewClient;
+    public TableView<StringProprty.TariffStringProperty> tableViewTariff;
+    public TableColumn<Tariff, String> tableColumnWatchTariffID;
+    public TableColumn<Tariff, String> tableColumnWatchTariffTitle;
+    public TableColumn<Tariff, String> tableColumnWatchTariffType;
     public TableColumn tableColumnWatchTariffLicFee;
-    public TableColumn tableColumnWatchTariffLicFeeYear;
-    public TableColumn tableColumnWatchTariffLicFeeMonth;
-    public TableColumn tableColumnWatchTariffLicFeeDay;
+    public TableColumn<Tariff, String> tableColumnWatchTariffLicFeeYear;
+    public TableColumn<Tariff, String> tableColumnWatchTariffLicFeeMonth;
+    public TableColumn<Tariff, String> tableColumnWatchTariffLicFeeDay;
     public TableColumn tableColumnWatchTariffInternetFee;
-    public TableColumn tableColumnWatchTariffInternetFeeYear;
-    public TableColumn tableColumnWatchTariffInternetFeeMonth;
-    public TableColumn tableColumnWatchTariffInternetFeeDay;
+    public TableColumn<Tariff, String> tableColumnWatchTariffInternetFeeYear;
+    public TableColumn<Tariff, String> tableColumnWatchTariffInternetFeeMonth;
+    public TableColumn<Tariff, String> tableColumnWatchTariffInternetFeeDay;
     public TableColumn tableColumnWatchTariffCost;
-    public TableColumn tableColumnWatchTariffCostConnect;
-    public TableColumn tableColumnWatchTariffCostCall;
-    public TableColumn tableColumnWatchTariffCostMinute;
-    public TableColumn tableColumnWatchTariffCost1Mb;
-    public TableColumn tableColumnWatchTariffCost1Gb;
-    public TableColumn tableColumnWatchTariffDescription;
+    public TableColumn<Tariff, String> tableColumnWatchTariffCostConnect;
+    public TableColumn<Tariff, String> tableColumnWatchTariffCostCall;
+    public TableColumn<Tariff, String> tableColumnWatchTariffCostMinute;
+    public TableColumn<Tariff, String> tableColumnWatchTariffCost1Mb;
+    public TableColumn<Tariff, String> tableColumnWatchTariffCost1Gb;
+    public TableColumn<Tariff, String> tableColumnWatchTariffDescription;
 
     public ScrollPane pane_searchTariff;
     public AnchorPane anchorSearchTariffByParam;
@@ -126,38 +124,38 @@ public class Controller implements Initializable {
     public TextField textFieldCost1MbUp;
     public TextField textFieldCost1GbDown;
     public TextField textFieldCost1GbUp;
-    public ChoiceBox choiceBoxTariffType;
+    public ChoiceBox<TariffType> choiceBoxTariffType;
     public Button buttonSearch;
 
     public AnchorPane watchTariffSearch;
-    public TableView tableViewTariffSearch;
-    public TableColumn tableColumnSearchID;
-    public TableColumn tableColumnSearchTitle;
-    public TableColumn tableColumnSearchType;
+    public TableView<StringProprty.TariffStringProperty> tableViewTariffSearch;
+    public TableColumn<Tariff, String> tableColumnSearchID;
+    public TableColumn<Tariff, String> tableColumnSearchTitle;
+    public TableColumn<Tariff, String> tableColumnSearchType;
     public TableColumn tableColumnSearchLicFee;
-    public TableColumn tableColumnSearchLicFeeYear;
-    public TableColumn tableColumnSearchLicFeeMonth;
-    public TableColumn tableColumnSearchLicFeeDay;
+    public TableColumn<Tariff, String> tableColumnSearchLicFeeYear;
+    public TableColumn<Tariff, String> tableColumnSearchLicFeeMonth;
+    public TableColumn<Tariff, String> tableColumnSearchLicFeeDay;
     public TableColumn tableColumnSearchInternetFee;
-    public TableColumn tableColumnSearchInternetFeeYear;
-    public TableColumn tableColumnSearchInternetFeeMonth;
-    public TableColumn tableColumnSearchInternetFeeDay;
+    public TableColumn<Tariff, String> tableColumnSearchInternetFeeYear;
+    public TableColumn<Tariff, String> tableColumnSearchInternetFeeMonth;
+    public TableColumn<Tariff, String> tableColumnSearchInternetFeeDay;
     public TableColumn tableColumnSearchCost;
-    public TableColumn tableColumnSearchCostConnect;
-    public TableColumn tableColumnSearchCostCall;
-    public TableColumn tableColumnSearchCostMinute;
-    public TableColumn tableColumnSearchCost1Mb;
-    public TableColumn tableColumnSearchCost1Gb;
-    public TableColumn tableColumnSearchDescription;
+    public TableColumn<Tariff, String> tableColumnSearchCostConnect;
+    public TableColumn<Tariff, String> tableColumnSearchCostCall;
+    public TableColumn<Tariff, String> tableColumnSearchCostMinute;
+    public TableColumn<Tariff, String> tableColumnSearchCost1Mb;
+    public TableColumn<Tariff, String> tableColumnSearchCost1Gb;
+    public TableColumn<Tariff, String> tableColumnSearchDescription;
     public Button searchButtonBack;
 
     public AnchorPane anchorStatistic;
-    public ComboBox statisticComboBoxTariff;
+    public ComboBox<String> statisticComboBoxTariff;
     public TextField statisticNumberofClient;
     public Button buttonstatisticApply;
 
     /**
-     *
+     * removed all field that can consist mutable value
      */
     private void clearAllFields() {
         choiceBoxAddNewTariffType.getItems().clear();
@@ -210,7 +208,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
+     * set all main anchors to .setVisible(false)
      */
     private void allAnchorsVisibleFalse() {
         anchorMain.setVisible(true);
@@ -226,8 +224,9 @@ public class Controller implements Initializable {
 
 
     /**
+     * switch anchors to anchorAddTariffSecond
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void buttonAddNewTariffNext(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
@@ -235,8 +234,9 @@ public class Controller implements Initializable {
     }
 
     /**
+     * read all fields of form add new tariff, add new tariff to array
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void buttonAddTariffApply(ActionEvent actionEvent) {
         Double licenceFeeYear = null, licenceFeeMonth = null, licenceFeeDay = null,
@@ -272,8 +272,9 @@ public class Controller implements Initializable {
     }
 
     /**
+     * switch anchors to anchorAddTariffSecond
      *
-     * @param actionEvent
+     * @param actionEvent - menuItem pressed
      */
     public void menuAddNewTariff(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
@@ -282,13 +283,15 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
-     * @param actionEvent
+     * @param actionEvent - menuItem pressed
      */
     public void menuAddTestValues(ActionEvent actionEvent) {
         operationCollection.addTestValues();
     }
 
+    /**
+     * @param actionEvent
+     */
     public void menuAddNewClient(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
         clearAllFields();
@@ -314,8 +317,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void addNewClientApply(ActionEvent actionEvent) {
         Long phoneNumber = 0l;
@@ -345,16 +347,16 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void close(ActionEvent actionEvent) {
         System.exit(100);
     }
 
     /**
+     * switch anchors to anchorWatchTariffs at tabPane
      *
-     * @param event
+     * @param event - button pressed
      */
     public void watchTariff(Event event) {
         allAnchorsVisibleFalse();
@@ -390,8 +392,9 @@ public class Controller implements Initializable {
     }
 
     /**
+     * switch anchors to anchorWatchClient at tapPane
      *
-     * @param event
+     * @param event - button pressed
      */
     public void watchClient(Event event) {
         ArrayList<Client> clients = operationCollection.clientArray();
@@ -415,16 +418,18 @@ public class Controller implements Initializable {
     }
 
     /**
+     * sorted tariffs array by cost
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void actionDBSortTariffByCost(ActionEvent actionEvent) {
         operationCollection.sortTariffByCost();
     }
 
     /**
+     * switch tabePane to Visible true
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void watchingTabs(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
@@ -432,8 +437,9 @@ public class Controller implements Initializable {
     }
 
     /**
+     * switch anchors to anchorStatistic
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void clientStatisticByTariff(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
@@ -444,8 +450,9 @@ public class Controller implements Initializable {
     }
 
     /**
+     * switch anchors to anchorSearchTariffByParam
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void actionSearchTariff(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
@@ -460,8 +467,10 @@ public class Controller implements Initializable {
     }
 
     /**
+     * Read all fields from form
+     * Searching tariffs array that pass conditions
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void buttonSearch(ActionEvent actionEvent) {
         allAnchorsVisibleFalse();
@@ -522,8 +531,9 @@ public class Controller implements Initializable {
     }
 
     /**
+     * returned to anchorSearchTariffByParam to add conditions
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void searchButonBack(ActionEvent actionEvent) {
         watchTariffSearch.setVisible(false);
@@ -532,8 +542,9 @@ public class Controller implements Initializable {
     }
 
     /**
+     * calculated & showed statistic by tariff, number of clients on tariff
      *
-     * @param actionEvent
+     * @param actionEvent - button pressed
      */
     public void showStatistic(ActionEvent actionEvent) {
         statisticNumberofClient.setText("");

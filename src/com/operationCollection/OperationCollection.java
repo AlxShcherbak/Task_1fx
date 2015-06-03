@@ -13,45 +13,51 @@ import java.util.GregorianCalendar;
  */
 public class OperationCollection {
     /**
-     *
+     * factory of client
      */
     static ClientFactorySingleTone clientFactory = ClientFactorySingleTone.getFactoryCard();
     /**
-     *
+     * factory of tariff
      */
     static TariffFactorySingleTone tariffFactory = TariffFactorySingleTone.getFactoryCard();
     /**
-     *
+     * array of tariffs
      */
     static ArrayList<Tariff> tariffs = new ArrayList<Tariff>();
     /**
-     *
+     * array of clients
      */
     static ArrayList<Client> clients = new ArrayList<Client>();
 
     /**
-     * @param title
-     * @param type
-     * @param cost
-     * @param dateStart
-     * @param textDescription
+     * add tariff to tariffs from factory : tariffFactory
+     *
+     * @param title           - title of tariff
+     * @param type            - type of tariff
+     * @param cost            - cost of tariff
+     * @param dateStart       - date than tariff adds
+     * @param textDescription - text description of tariff
      */
     public void addTariff(String title, TariffType type, Cost cost, GregorianCalendar dateStart, String textDescription) {
         tariffs.add(tariffFactory.addTariff(title, type, cost, dateStart, textDescription));
     }
 
     /**
-     * @param name
-     * @param phoneNumber
-     * @param tariff
+     * add client to clients from factory : clientFactory
+     *
+     * @param name        - name of client
+     * @param phoneNumber - phone number of client
+     * @param tariff      - tariff
      */
     public void addClient(String name, Long phoneNumber, Tariff tariff) {
         clients.add(clientFactory.addClient(name, phoneNumber, tariff));
     }
 
     /**
-     * @param id
-     * @return
+     * get tariff from tariffs by id
+     *
+     * @param id - id of tariff that we geted
+     * @return tariff with tariff.id = id
      */
     public Tariff getTariffById(Integer id) {
         if (id == null) return null;
@@ -62,8 +68,10 @@ public class OperationCollection {
     }
 
     /**
-     * @param id
-     * @return
+     * get client from clients by id
+     *
+     * @param id - id of client that we geted
+     * @return client with client.id = id
      */
     public Client getClientByID(Integer id) {
         for (Client client : clients) {
@@ -73,21 +81,21 @@ public class OperationCollection {
     }
 
     /**
-     * @return
+     * @return array of tariffs
      */
     public ArrayList<Tariff> tariffsArray() {
         return tariffs;
     }
 
     /**
-     * @return
+     * @return array of clients
      */
     public ArrayList<Client> clientArray() {
         return clients;
     }
 
     /**
-     *
+     * adds test values to tariffs & clients
      */
     public void addTestValues() {
         /*id, title, type, cost, dateStart, textDescription*/
@@ -113,7 +121,7 @@ public class OperationCollection {
     }
 
     /**
-     *
+     * sorting tariffs by cost
      */
     public void sortTariffByCost() {
         Collections.sort(tariffs);
@@ -121,19 +129,21 @@ public class OperationCollection {
     }
 
     /**
-     * @param licenceFeeYear
-     * @param licenceFeeMonth
-     * @param licenceFeeDay
-     * @param costOfCall
-     * @param connectionCost
-     * @param costOfMinute
-     * @param internetFeeYear
-     * @param internetFeeMonth
-     * @param internetFeeDay
-     * @param internetCost1Gb
-     * @param internetCost1Mb
-     * @param tariffType
-     * @return
+     * Searching tariffs array that pass conditions
+     *
+     * @param licenceFeeYear   - licence fee by year
+     * @param licenceFeeMonth  - licence fee by month
+     * @param licenceFeeDay    - licence fee by day
+     * @param costOfCall       - cost of one call
+     * @param connectionCost   - cost of connection
+     * @param costOfMinute     - cost of minute calling
+     * @param internetFeeYear  - cost of internet fee by year
+     * @param internetFeeMonth - cost of internet fee by month
+     * @param internetFeeDay   - cost of internet fee by day
+     * @param internetCost1Gb  - cost of 1 Gb of internet
+     * @param internetCost1Mb  - cost of 1 Mb of internet
+     * @param tariffType       -  tariff type
+     * @return array of tariffs that pass condition
      */
     public ArrayList<Tariff> searchTariffByParam(ValueInBound licenceFeeYear, ValueInBound licenceFeeMonth,
                                                  ValueInBound licenceFeeDay, ValueInBound costOfCall,
@@ -165,8 +175,10 @@ public class OperationCollection {
     }
 
     /**
-     * @param tariff
-     * @return
+     * Calculated statistic by tariff, number of clients on tariff
+     *
+     * @param tariff - tariff, about that counted statistic
+     * @return - number of client on tariff
      */
     public Integer statisticByTariff(Tariff tariff) {
         Integer clientCounter = 0;

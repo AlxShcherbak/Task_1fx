@@ -1,7 +1,6 @@
 package com.controllers;
 
 
-import com.classes.Tariff;
 import com.classes.ValueInBound;
 import javafx.scene.control.TextField;
 
@@ -10,9 +9,10 @@ import javafx.scene.control.TextField;
  */
 public class SubController {
     /**
+     * transformed textField.getText to Double if textField==null returned 0d
      *
-     * @param textField
-     * @return
+     * @param textField - input textfield
+     * @return - Double value of textField, if textField==null returned 0d
      */
     public Double textFieldToDouble(TextField textField) {
         try {
@@ -22,6 +22,12 @@ public class SubController {
         return 0d;
     }
 
+    /**
+     * transformed textField.getText to Double if textField==null returned null
+     *
+     * @param textField - input textfield
+     * @return - Double value of textField, if textField==null returned null
+     */
     public Double textFieldToDoubleWithNull(TextField textField) {
         try {
             return Double.parseDouble(textField.getText().toString());

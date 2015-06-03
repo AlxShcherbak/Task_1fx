@@ -13,9 +13,10 @@ public class ValueInBound {
     }
 
     /**
+     * check that value at bounds
      *
-     * @param value
-     * @return
+     * @param value - value that checked
+     * @return - true at bounds, false out of bounds
      */
     public Boolean valueInBound(Double value) {
         if (downBound == null && upBound == null) {
@@ -60,7 +61,7 @@ public class ValueInBound {
     }
 
     /**
-     *
+     * Value bound exception
      */
     public class BoundValueException extends RuntimeException {
         /**
